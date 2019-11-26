@@ -1,0 +1,2 @@
+class PlayerTurnsController < ApplicationController
+end

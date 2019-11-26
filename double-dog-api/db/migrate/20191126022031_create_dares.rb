@@ -3,6 +3,7 @@ class CreateDares < ActiveRecord::Migration[6.0]
     create_table :dares do |t|
       t.string :text
       t.integer :points
+      t.integer :shots
 
       t.timestamps
     end
