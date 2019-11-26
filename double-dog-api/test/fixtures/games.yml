@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  winScore: MyString
+  pastDares: MyString
+
+two:
+  winScore: MyString
+  pastDares: MyString
