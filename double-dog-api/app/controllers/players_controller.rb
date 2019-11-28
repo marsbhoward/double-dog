@@ -5,19 +5,19 @@ class PlayersController < ApplicationController
   end
 
   def show
-    @player = Player.find(user_params[:id])
+    player = Player.find(player_params[:id])
     render json: @player
   end
 
   def create
-    @player = Player.find_or_create_by(name: user_params[:name])
-    render json: @user
+    player = Game.find_by(id:1).players.create(name: player_params[:name])
+    render json: @player
 
   end
 
   private
 
-  def user_params
+  def player_params
     params.require(:player).permit(:id, :name, :score ,:shots)
   end
 

@@ -4,8 +4,8 @@ const passButton = document.getElementById("pass-button");
 const infoSpace = document.getElementById("rules-scoreboard-div");
 const intro = document.getElementById("intro-div");
 const addPlayer = document.getElementById("add-player-field");
-const addPlayerForm = document.querySelector("#add-player-form")
-
+const addPlayerForm = document.getElementById("add-player-form")
+const playerNameField = document.getElementById("add-player-field")
 
 const playerDareButton = document.getElementById("player-dares");
 const allDaresButton = document.getElementById("game-dares");
@@ -31,15 +31,12 @@ var selectedPlayer = {};
 
 var currentPlayer = listOfPlayers[currentId];
 
-let player;
-
 addPlayer.focus()
 
 
 //to be called on load
 document.addEventListener('DOMContentLoaded', function(){
  	fetchDares();
- 	fetchPlayers();
  })
 
 //click event(s) for play button
@@ -53,6 +50,36 @@ shotButton.addEventListener("click", function(){generateDare(listOfDares)},false
 //click event(s) for pass button
 passButton.addEventListener("click", passDare,false);
 
+//click event for add player button 
+addPlayerForm.addEventListener('submit', e=> {
+	e.preventDefault()
+
+	let player = playerNameField.value
+	player = capitalizeWord(player)
+
+	let newPlayer = {name: player}
+
+	if(player){
+		adapter.createPlayer(newPlayer).then(res=> {
+			//enable elements
+		fetchPlayers();
+		alert(player +" was added")
+		playerNameField.value = ""
+		playerNameField.placeholder="Add a Player"
+		
+		})
+		playButton.disabled=false
+		
+	}
+	else {
+		alert("Please ener a name")
+	}
+});
+
+function capitalizeWord(string){
+	const s = string.toLowerCase()
+	return s.charAt(0).toUpperCase() + s.slice(1)
+}
 
 function showPlayerDares(){
 	infoSpace.innerHTML="player dares";
@@ -73,8 +100,8 @@ function getScoreboard(){
 		 theScore += `
  		<span> 
  			${listOfPlayers[i].name}<br>
- 			score:${listOfPlayers[i].score}<br>
-			shots:${listOfPlayers[i].shots}<br>
+ 			score: ${listOfPlayers[i].score}<br>
+			shots: ${listOfPlayers[i].shots}<br>
 			<br>
  		</span>
 
@@ -96,7 +123,7 @@ function doneDare(){
 		passButton.disabled=false
 		// buttons for scoreboard, rules, player dares, and game dares
 intro.innerHTML = "";
-getScoreboard()
+getScoreboard();
 playerDareButton.addEventListener("click", showPlayerDares,false);
 allDaresButton.addEventListener("click", showGameDares,false);
 ruleButton.addEventListener("click", showRules,false);

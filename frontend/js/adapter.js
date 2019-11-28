@@ -16,6 +16,15 @@ const adapter = {
     .then(resp => resp.json()) 
   },
 
+  createTurn: (player) => {
+    return fetch(`${URL}/turns`, {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(name)
+    })
+    .then(resp => resp.json()) 
+  },
+
   getDares: () => {
   	return fetch(`${URL}/dares`)
   	.then(resp => resp.json()) 
