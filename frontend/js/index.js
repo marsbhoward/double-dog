@@ -87,7 +87,7 @@ function getScoreboard(){
 
 function doneDare(){
 	if (previousDares.length >= 1){
-		currentPlayer.score ++
+		currentPlayer.score += currentDare.points
 		playerScore.innerHTML = currentPlayer.score
 		getScoreboard()
 	}
@@ -106,19 +106,23 @@ scoreboard.addEventListener("click", getScoreboard,false);
 }
 
 function shotDare(){
-	currentPlayer.shots ++
+	currentPlayer.shots += currentDare.shots
 	getScoreboard()
 	TurnPlayer();
 }
 
 function passDare(){
 	if (currentPlayer.score <=0) {
-		alert("you dont have any points yet!, you will have to do the dare or take the shot.")
+		alert("you dont have any points yet! \nYou will have to do the dare or take the penalty shot(s).")
+	}
+	else if (currentPlayer.score-= currentDare.points<0) {
+		alert("you dont have enough points to pass this dare! \nYou will have to do the dare or take the penalty shot(s).")
 	}
 	else{
-	 	currentPlayer.score --
+	 	currentPlayer.score -= currentDare.points
 	 	playerScore.innerHTML = currentPlayer.score
 	 	TurnPlayer();
+	 	getScoreboard()
 	}
 }
 
@@ -140,15 +144,13 @@ function TurnPlayer(){
 
 //collects dares from backend.
 function fetchDares() {
-	 return fetch("http://localhost:3000/dares")
-	.then(resp => resp.json()) 
+	adapter.getDares()
 	.then(dares => retrieveDares(dares))	
 }
 
 //collects players from backend.
 function fetchPlayers() {
-	 return fetch("http://localhost:3000/players")
-	.then(resp => resp.json()) 
+	adapter.getPlayers()
 	.then(players => retrievePlayers(players))	
 }
 
@@ -207,7 +209,8 @@ function generateDare()
 		}
  		
  	
- 		showDare.innerHTML = dareText;
+ 		showDare.innerHTML = dareText +
+ 		`<br><br><span>points: </span>`+ currentDare.points + `<br> <span>penalty shot(s): </span>`+ currentDare.shots;
  		dareArchive(currentDare);	
  }
 
