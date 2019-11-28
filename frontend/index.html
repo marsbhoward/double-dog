@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Double Dog</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+   
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-138654116-1');
+    </script>
+    <!--
+    	import icon
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/tzip25/wordy-frontend/master/site/favicon3.png" type="image/x-icon"> 
+    -->
+
+    
+  </head>
+  <body>
+    <div class="ui bottom attached segment pushable">
+      <div id="left-menu" class="ui visible inverted left vertical sidebar menu">
+        <div class="item">
+          <h1>
+            <i class="beer icon"></i>
+             <span class="game-title">DOUBLE</span> DOG <span class="game-title">DARE</span>
+          </h1>
+        </div>
+        <a id="scoreboard" disabled="true" class="item">
+          <i class="table icon"></i>
+          Score Board
+        </a>
+        <a id="player-dares" class="item">
+          <i class="angle left icon"></i>
+          Players Past Dares
+        </a>
+        <a id="game-dares" class="item">
+          <i class="angle double left icon"></i>
+          All Past Dares
+        </a>
+        <a id="rules" class="item">
+          <i class="info icon"></i>
+          Rules
+        </a>
+        <div class="item" id="footer">
+          Created by <a href="https://github.com/marsbhoward" target="_blank"> Mars Howard</a>
+        </div>
+      </div>
+
+
+
+      <div id="pusher" class="pusher">
+
+        <div id="left-container">
+            <div class="ui green message floated segment" id ="turn-player">Turn Player: </div>
+            <div class="ui green message floated segment" id ="game-score-div">Score: <br><span id="game-score"></span></div>
+            <div class="ui green message floated segment" id ="game-score-div">Shots: <br><span id="shots-count"></span></div>
+            <div class="ui" id="game-container">
+            	<h2 id="dares"></h2>
+            </div>
+            <button id="play-button" class="ui button teal" ><i class="icon play"></i>PLAY</button>
+            <button id="shot-button" class="ui button yellow" disabled="true"><i class="beer icon"></i>SHOT</button>
+            <button id="pass-button" class="ui button orange" disabled="true"><i class="icon stop"></i>PASS</button>
+            <br>
+            <div id="word-submit-confirm"></div>    
+        </div>
+        <div id="right-container" class="column">
+          <div id="intro-div">
+            <h3> Welcome To Double Dog Dare <br><br>
+              Enter in all the players below, when finished hit the play button 
+            </h3> 
+          </div>
+          <br>
+          <div class="ui input" id="rules-scoreboard-div">
+              <!-- Add a player form -->
+            <form autocomplete="off" id="add-player-form" class="" action="index.html" method="post">
+              <input id="add-player-field" type="text" name="" value="" placeholder="Add a Player">
+              <br><br>
+              <input type="submit">
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+   <script src="js/index.js"></script>
+  </body>
+</html>

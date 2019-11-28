@@ -1,0 +1,114 @@
+.game-title {
+  font-size: 1.5em;
+}
+
+#turn-player{
+  width: 9em;
+  display: block;
+  margin-left: 2em;
+  margin-top: 1em;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+#game-score-div {
+  width: 9em;
+  display: block;
+  margin-top: 1em;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+#play-button {
+  position: relative;
+  margin-left: 2em;
+  width: 50em;
+  height: 100%;
+  align-self: center;
+}
+
+#pass-button {
+  position: relative;
+  margin-left: 2em;
+  width: 50em;
+  height: 100%;
+  align-self: center;
+}
+#shot-button {
+  position: relative;
+  margin-left: 2em;
+  width: 50em;
+  height: 100%;
+  align-self: center;
+}
+
+#game-container {
+  background: #ebebeb;
+  margin: 1em 1em 1em 2em;
+  width: 52em;
+  height: 32em;
+  display: grid;
+  grid-auto-rows: 30em;
+  max-width: 50em;
+}
+
+
+#left-container {
+  float: left;
+  width: 54em;
+}
+
+#right-container {
+  min-width: 15em;
+  max-width: 24em;
+  float: left;
+  margin-left: 2em;
+  margin-top: 6.5em;
+}
+
+.valid-word {
+  font-size: 3.5em;
+  color: #07bfb6;
+}
+
+
+#scores-board{
+  min-width: 24em;
+  max-width: 24em;
+  float: left;
+  margin-left: 2em;
+  margin-top: 6.5em;
+}
+
+#rules-board{
+  min-width: 24em;
+  max-width: 24em;
+  float: left;
+  margin-left: 2em;
+  margin-top: 6.5em;
+}
+
+#player-dares-board{
+  min-width: 24em;
+  max-width: 24em;
+  float: left;
+  margin-left: 2em;
+  margin-top: 6.5em;
+}
+
+#all-dares-board{
+  min-width: 24em;
+  max-width: 24em;
+  float: left;
+  margin-left: 2em;
+  margin-top: 6.5em;
+}
+
+#footer {
+  background-color: #3f4447;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 8px 10px;
+}
