@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2019_11_26_032305) do
   end
 
   create_table "games", force: :cascade do |t|
-    t.string "winScore"
+    t.integer "winScore"
     t.string "pastDares"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -40,8 +40,10 @@ ActiveRecord::Schema.define(version: 2019_11_26_032305) do
     t.string "name"
     t.integer "score"
     t.integer "shots"
+    t.integer "game_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_players_on_game_id"
   end
 
   create_table "turns", force: :cascade do |t|
@@ -52,4 +54,5 @@ ActiveRecord::Schema.define(version: 2019_11_26_032305) do
 
   add_foreign_key "player_turns", "players"
   add_foreign_key "player_turns", "turns"
+  add_foreign_key "players", "games"
 end
