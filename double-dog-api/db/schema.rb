@@ -21,8 +21,7 @@ ActiveRecord::Schema.define(version: 2019_11_26_032305) do
   end
 
   create_table "games", force: :cascade do |t|
-    t.integer "winScore"
-    t.string "pastDares"
+    t.integer "winScore", default: 10
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -48,11 +47,14 @@ ActiveRecord::Schema.define(version: 2019_11_26_032305) do
 
   create_table "turns", force: :cascade do |t|
     t.integer "count"
+    t.integer "dare_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["dare_id"], name: "index_turns_on_dare_id"
   end
 
   add_foreign_key "player_turns", "players"
   add_foreign_key "player_turns", "turns"
   add_foreign_key "players", "games"
+  add_foreign_key "turns", "dares"
 end
