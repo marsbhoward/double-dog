@@ -28,11 +28,11 @@ ActiveRecord::Schema.define(version: 2019_11_26_032305) do
 
   create_table "player_turns", force: :cascade do |t|
     t.integer "player_id", null: false
-    t.integer "turn_id", null: false
+    t.integer "dare_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["dare_id"], name: "index_player_turns_on_dare_id"
     t.index ["player_id"], name: "index_player_turns_on_player_id"
-    t.index ["turn_id"], name: "index_player_turns_on_turn_id"
   end
 
   create_table "players", force: :cascade do |t|
@@ -53,8 +53,8 @@ ActiveRecord::Schema.define(version: 2019_11_26_032305) do
     t.index ["dare_id"], name: "index_turns_on_dare_id"
   end
 
+  add_foreign_key "player_turns", "dares"
   add_foreign_key "player_turns", "players"
-  add_foreign_key "player_turns", "turns"
   add_foreign_key "players", "games"
   add_foreign_key "turns", "dares"
 end

@@ -6,12 +6,12 @@ class PlayersController < ApplicationController
 
   def show
     player = Player.find(player_params[:id])
-    render json: @player
+    render json: player
   end
 
   def create
     player = Game.find_by(id:1).players.create(name: player_params[:name])
-    render json: @player
+    render json: player
 
   end
 

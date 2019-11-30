@@ -41,11 +41,14 @@ document.addEventListener('DOMContentLoaded', function(){
 
 //click event(s) for play button
 playButton.addEventListener("click", doneDare,false);
+playButton.addEventListener("click", getScoreboard,false);
 playButton.addEventListener("click", function(){generateDare(listOfDares)},false);
+playButton.addEventListener("click", function(){createTurn(currentPlayer.id,currentDare.id)},false);
 
 //click event(s) for shot button
 shotButton.addEventListener("click", shotDare,false);
 shotButton.addEventListener("click", function(){generateDare(listOfDares)},false);
+
 
 //click event(s) for pass button
 passButton.addEventListener("click", passDare,false);
@@ -76,6 +79,7 @@ addPlayerForm.addEventListener('submit', e=> {
 	}
 });
 
+
 function capitalizeWord(string){
 	const s = string.toLowerCase()
 	return s.charAt(0).toUpperCase() + s.slice(1)
@@ -91,6 +95,15 @@ function showGameDares(){
 
 function showRules(){
 	infoSpace.innerHTML="rules";
+}
+
+function createTurn(player_id, dare_id){
+	adapter.createPlayerTurn(currentPlayer.id, currentDare.id).then(res => {
+		
+		console.log(currentPlayer.id)
+		console.log(currentDare.id)
+		console.log("player turn created")
+	})
 }
 
 function getScoreboard(){	
@@ -115,15 +128,13 @@ function getScoreboard(){
 function doneDare(){
 	if (previousDares.length >= 1){
 		currentPlayer.score += currentDare.points
-		playerScore.innerHTML = currentPlayer.score
-		getScoreboard()
+		playerScore.innerHTML = currentPlayer.score	
 	}
 	else{
 		shotButton.disabled=false
 		passButton.disabled=false
 		// buttons for scoreboard, rules, player dares, and game dares
 intro.innerHTML = "";
-getScoreboard();
 playerDareButton.addEventListener("click", showPlayerDares,false);
 allDaresButton.addEventListener("click", showGameDares,false);
 ruleButton.addEventListener("click", showRules,false);
@@ -140,9 +151,9 @@ function shotDare(){
 
 function passDare(){
 	if (currentPlayer.score <=0) {
-		alert("you dont have any points yet! \nYou will have to do the dare or take the penalty shot(s).")
+		alert("you dont have any points! \nYou will have to do the dare or take the penalty shot(s).")
 	}
-	else if (currentPlayer.score-= currentDare.points<0) {
+	else if ((currentPlayer.score - currentDare.points)<0) {
 		alert("you dont have enough points to pass this dare! \nYou will have to do the dare or take the penalty shot(s).")
 	}
 	else{
@@ -165,7 +176,6 @@ function TurnPlayer(){
 	turnPlayer.innerHTML = "Turn Player: "+ currentPlayer.name;
 	playerScore.innerHTML = currentPlayer.score;
 	playerShots.innerHTML = currentPlayer.shots;
-	//console.log(currentPlayer.id)
 }
 
 
@@ -209,7 +219,7 @@ function generatePlayer(){
 //randomly selects a dare.
 function generateDare()   
  {		 
- 		//TurnPlayer();
+ 	
  		var ranDare = Math.floor(Math.random() * (listOfDares.length));
  		currentDare = listOfDares[ranDare];
  		console.log(currentDare);	
