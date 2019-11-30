@@ -1,7 +1,7 @@
 const URL = "http://localhost:3000"
 
 const adapter = {
-
+//players
   getPlayers: () => {
     return fetch(`${URL}/games/:game_id/players`)
     .then(res=>res.json())
@@ -16,6 +16,8 @@ const adapter = {
     .then(resp => resp.json()) 
   },
 
+
+//player turns
   getPlayerTurns: () => {
     return fetch(`${URL}/player_turns`)
     .then(res=>res.json())
@@ -30,6 +32,8 @@ const adapter = {
     .then(resp => resp.json()) 
   },
 
+
+//dares
   getDares: () => {
   	return fetch(`${URL}/dares`)
   	.then(resp => resp.json()) 

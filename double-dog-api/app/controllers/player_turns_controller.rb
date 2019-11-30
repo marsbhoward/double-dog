@@ -10,6 +10,7 @@ class PlayerTurnsController < ApplicationController
     render json: player_turn
   end
 
+
   private
   def player_turn_params
   	params.require(:player_turn).permit(:player_id, :dare_id)

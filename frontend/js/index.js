@@ -27,6 +27,7 @@ var currentDare = {};
 var currentId = -1;
 var listOfPlayers = {};
 var listOfPlayerTurns = {};
+var listOfPlayersTurns = {};
 var randomPlayer = {};
 var selectedPlayer = {};
 
@@ -87,9 +88,6 @@ function capitalizeWord(string){
 	return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
-function showPlayerDares(){
-	infoSpace.innerHTML="player dares";
-}
 
 //reveal past dares in info space
 function showGameDares(){	
@@ -112,6 +110,24 @@ function showGameDares(){
  		<br><br>`+pastDares +`</div>`;
 }
 
+function showPlayersDares(){
+	var playerDares = [];
+	for(var i = 0; i < listOfPlayersTurns.length; i++)
+	{	
+		 playerDares += `
+ 		<span> 
+ 			turn: ${listOfPlayersTurns[i].id}<br>
+ 			dare: ${listOfDares[(listOfPlayersTurns[i].dare_id-1)].text}<br>
+			<br>
+ 		</span>
+
+ 	`
+	}
+	infoSpace.innerHTML= `<br><br><div class="ui raised segment" id="scores">
+ 		<a class="ui red ribbon label">Your Past Dares</a>
+ 		<br><br>`+playerDares +`</div>`
+}
+
 function showRules(){
 	infoSpace.innerHTML="rules";
 }
@@ -120,9 +136,7 @@ function createTurn(player_id, dare_id){
 	adapter.createPlayerTurn(currentPlayer.id, currentDare.id).then(res => {
 
 		fetchPlayerTurns()
-		console.log("current player "+currentPlayer.id)
-		console.log("current dare "+currentDare.id)
-		console.log("player turn created")
+		fetchPlayersTurns()
 	})
 }
 
@@ -145,24 +159,6 @@ function getScoreboard(){
  		<br><br>`+theScore +`</div>`
 }
 
-function getAllDares(){
-	var theScore = [];
-	for(var i = 0; i < listOfPlayers.length; i++)
-	{	
-		 theScore += `
- 		<span> 
- 			${listOfPlayers[i].name}<br>
- 			score: ${listOfPlayers[i].score}<br>
-			shots: ${listOfPlayers[i].shots}<br>
-			<br>
- 		</span>
-
- 	`
-	}
-	infoSpace.innerHTML= `<br><br><div class="ui raised segment" id="scores">
- 		<a class="ui red ribbon label">Scoreboard</a>
- 		<br><br>`+theScore +`</div>`
-}
 
 function doneDare(){
 	if (previousDares.length >= 1){
@@ -173,11 +169,11 @@ function doneDare(){
 		shotButton.disabled=false
 		passButton.disabled=false
 		// buttons for scoreboard, rules, player dares, and game dares
-intro.innerHTML = "";
-playerDareButton.addEventListener("click", showPlayerDares,false);
-allDaresButton.addEventListener("click", showGameDares,false);
-ruleButton.addEventListener("click", showRules,false);
-scoreboard.addEventListener("click", getScoreboard,false);
+		intro.innerHTML = "";
+		playerDareButton.addEventListener("click", showPlayersDares,false);
+		allDaresButton.addEventListener("click", showGameDares,false);
+		ruleButton.addEventListener("click", showRules,false);
+		scoreboard.addEventListener("click", getScoreboard,false);
 	}
 	TurnPlayer();
 }
@@ -238,6 +234,11 @@ function fetchPlayerTurns(){
 		.then(playerTurns => retrievePlayerTurns(playerTurns))
 }
 
+//collects certain player turns
+function fetchPlayersTurns(){
+	adapter.getPlayerTurns()
+		.then(playerTurns => retrievePlayersTurns(playerTurns))
+}
 
 
 //all loaded Dares
@@ -266,6 +267,22 @@ function retrievePlayerTurns(playerTurns){
 	});
 	listOfPlayerTurns = playerTurnList;
 }
+
+//load current players turns
+function retrievePlayersTurns(playerTurns){
+	var playersTurnList = [];
+	playerTurns.forEach(turn=>{
+		if (turn.player_id == currentPlayer.id)
+		{
+			playersTurnList.push(turn)
+			console.log(turn.player_id)
+			console.log(currentPlayer.id)
+			console.log('added turn to player')
+		}
+		
+	});
+	listOfPlayersTurns = playersTurnList;
+	}
 
 //randomly selects a Player.
 function generatePlayer(){
