@@ -26,6 +26,7 @@ var getScore = [];
 var currentDare = {};
 var currentId = -1;
 var listOfPlayers = {};
+var listOfPlayerTurns = {};
 var randomPlayer = {};
 var selectedPlayer = {};
 
@@ -48,6 +49,7 @@ playButton.addEventListener("click", function(){createTurn(currentPlayer.id,curr
 //click event(s) for shot button
 shotButton.addEventListener("click", shotDare,false);
 shotButton.addEventListener("click", function(){generateDare(listOfDares)},false);
+shotButton.addEventListener("click", function(){createTurn(currentPlayer.id,currentDare.id)},false);
 
 
 //click event(s) for pass button
@@ -89,8 +91,25 @@ function showPlayerDares(){
 	infoSpace.innerHTML="player dares";
 }
 
-function showGameDares(){
-	infoSpace.innerHTML="game dares";
+//reveal past dares in info space
+function showGameDares(){	
+	var pastDares = [];
+//	fetchPlayerTurns();
+	for(var i = 0; i < listOfPlayerTurns.length; i++)
+	{	
+		 pastDares += `
+ 		<span> 
+ 			turn: ${listOfPlayerTurns[i].id}<br>
+ 			player: ${listOfPlayers[(listOfPlayerTurns[i].player_id)-1].name}<br>
+
+ 			dare: ${listOfDares[(listOfPlayerTurns[i].dare_id-1)].text}<br>
+			<br>
+ 		</span>
+ 	`
+	}
+	infoSpace.innerHTML= `<br><br><div class="ui raised segment" id="past_dares">
+ 		<a class="ui red ribbon label">All Past Dares</a>
+ 		<br><br>`+pastDares +`</div>`;
 }
 
 function showRules(){
@@ -99,14 +118,34 @@ function showRules(){
 
 function createTurn(player_id, dare_id){
 	adapter.createPlayerTurn(currentPlayer.id, currentDare.id).then(res => {
-		
-		console.log(currentPlayer.id)
-		console.log(currentDare.id)
+
+		fetchPlayerTurns()
+		console.log("current player "+currentPlayer.id)
+		console.log("current dare "+currentDare.id)
 		console.log("player turn created")
 	})
 }
 
 function getScoreboard(){	
+	var theScore = [];
+	for(var i = 0; i < listOfPlayers.length; i++)
+	{	
+		 theScore += `
+ 		<span> 
+ 			${listOfPlayers[i].name}<br>
+ 			score: ${listOfPlayers[i].score}<br>
+			shots: ${listOfPlayers[i].shots}<br>
+			<br>
+ 		</span>
+
+ 	`
+	}
+	infoSpace.innerHTML= `<br><br><div class="ui raised segment" id="scores">
+ 		<a class="ui red ribbon label">Scoreboard</a>
+ 		<br><br>`+theScore +`</div>`
+}
+
+function getAllDares(){
 	var theScore = [];
 	for(var i = 0; i < listOfPlayers.length; i++)
 	{	
@@ -161,6 +200,8 @@ function passDare(){
 	 	playerScore.innerHTML = currentPlayer.score
 	 	TurnPlayer();
 	 	getScoreboard()
+	 	generateDare(listOfDares);
+	 	createTurn(currentPlayer.id,currentDare.id);
 	}
 }
 
@@ -191,6 +232,12 @@ function fetchPlayers() {
 	.then(players => retrievePlayers(players))	
 }
 
+//collects player turns from backend.
+function fetchPlayerTurns(){
+	adapter.getPlayerTurns()
+		.then(playerTurns => retrievePlayerTurns(playerTurns))
+}
+
 
 
 //all loaded Dares
@@ -202,13 +249,22 @@ function  retrieveDares(dares){
 	listOfDares = dareList;
 }
 
-//all loaded Dares
+//all loaded players
 function  retrievePlayers(players){
 	var playerList = [];
 	players.forEach(player=> {		
 		playerList.push(player);	
 	});
 	listOfPlayers = playerList;
+}
+
+//load player turns
+function retrievePlayerTurns(playerTurns){
+	var playerTurnList = [];
+	playerTurns.forEach(turn=>{
+		playerTurnList.push(turn)
+	});
+	listOfPlayerTurns = playerTurnList;
 }
 
 //randomly selects a Player.
@@ -221,8 +277,7 @@ function generateDare()
  {		 
  	
  		var ranDare = Math.floor(Math.random() * (listOfDares.length));
- 		currentDare = listOfDares[ranDare];
- 		console.log(currentDare);	
+ 		currentDare = listOfDares[ranDare];	
  		var dareText = currentDare.text
  	
 
@@ -230,19 +285,16 @@ function generateDare()
  		if (dareText.includes("[RandomPlayer]")){
  			randomPlayer=  generatePlayer();
  			selectedPlayer = listOfPlayers[randomPlayer];
- 			console.log(selectedPlayer.id, currentPlayer.id)
  			//stops current player from being the random player
  			if (selectedPlayer.id == currentPlayer.id){
  				while (selectedPlayer.id == currentPlayer.id){
  					randomPlayer=  generatePlayer();
- 					console.log(randomPlayer);
  					selectedPlayer = listOfPlayers[randomPlayer];
  				}
  			}
 
 
 			dareText = dareText.replace("[RandomPlayer]", selectedPlayer.name);
-			console.log('replaced RandomPlayer');
 		}
  		
  	

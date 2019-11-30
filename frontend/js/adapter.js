@@ -25,7 +25,7 @@ const adapter = {
     return fetch(`${URL}/player_turns`, {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({player_id,dare_id})
+      body: JSON.stringify({player_id, dare_id})
     })
     .then(resp => resp.json()) 
   },
