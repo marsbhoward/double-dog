@@ -104,6 +104,22 @@
   margin-top: 6.5em;
 }
 
+#past_dares{
+  overflow-y:auto;
+  max-height: 562px
+}
+
+#scores{
+  overflow-y:auto;
+  min-width: 24em;
+  min-width: 24em;
+  max-width: 24em;
+}
+
+#rules-scoreboard-div{
+  max-height: 545px
+}
+
 #footer {
   background-color: #3f4447;
   overflow: hidden;
