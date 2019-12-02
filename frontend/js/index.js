@@ -101,8 +101,8 @@ function showGameDares(){
 	{	
 		 pastDares += `
  		<span> 
- 			turn: ${listOfPlayerTurns[i].id}<br>
- 			player: ${listOfPlayers[(listOfPlayerTurns[i].player_id)-1].name}<br>
+ 			turn: ${listOfPlayers[(i)].name}<br>
+ 			player: ${listOfPlayerTurns[i].name}<br>
 
  			dare: ${listOfDares[(listOfPlayerTurns[i].dare_id-1)].text}<br>
 			<br>
