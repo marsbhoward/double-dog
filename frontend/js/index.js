@@ -39,6 +39,7 @@ addPlayer.focus()
 //to be called on load
 document.addEventListener('DOMContentLoaded', function(){
  	fetchDares();
+ 	adapter.createGame()
  })
 
 //click event(s) for play button

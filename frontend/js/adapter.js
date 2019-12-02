@@ -1,6 +1,20 @@
 const URL = "http://localhost:3000"
 
 const adapter = {
+//game
+createGame: () => {
+  return fetch(`${URL}/games`, {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+    })
+    .then(resp => resp.json()) 
+  },
+
+  getGame: () => {
+    return fetch(`${URL}/games`)
+    .then(res=>res.json())
+  },
+
 //players
   getPlayers: () => {
     return fetch(`${URL}/games/:game_id/players`)
@@ -31,7 +45,6 @@ const adapter = {
     })
     .then(resp => resp.json()) 
   },
-
 
 //dares
   getDares: () => {

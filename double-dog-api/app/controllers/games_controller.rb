@@ -9,9 +9,14 @@ class GamesController < ApplicationController
     render json: game
   end
 
+  def create
+    game = Game.create()
+    render json: game
+  end
+
  private
 
   def user_params
-    params.permit(:id)
+    params.permit(:id,:winscore)
   end
 end
