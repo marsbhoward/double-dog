@@ -3,6 +3,7 @@ class CreatePlayerTurns < ActiveRecord::Migration[6.0]
     create_table :player_turns do |t|
       t.references :player,null: false, foreign_key: true
       t.references :dare,null: false, foreign_key: true
+      t.references :game,null: false, foreign_key: true
 
       t.timestamps
     end
