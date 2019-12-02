@@ -258,7 +258,7 @@ function fetchPlayersTurns(){
 
 
 function  retrieveGame(games){
-	var listOfGames = [];
+	let listOfGames = [];
 	games.forEach(game=> {		
 		listOfGames.push(game);	
 	});
@@ -270,7 +270,7 @@ function  retrieveGame(games){
 
 //all loaded Dares
 function  retrieveDares(dares){
-	var dareList = [];
+	let dareList = [];
 	dares.forEach(dare=> {		
 		dareList.push(dare);	
 	});
@@ -279,7 +279,7 @@ function  retrieveDares(dares){
 
 //all loaded players
 function  retrievePlayers(players){
-	var playerList = [];
+	let playerList = [];
 	players.forEach(player=> {		
 		playerList.push(player);	
 	});
@@ -288,7 +288,7 @@ function  retrievePlayers(players){
 
 //load player turns
 function retrievePlayerTurns(playerTurns){
-	var playerTurnList = [];
+	let playerTurnList = [];
 	playerTurns.forEach(turn=>{
 		playerTurnList.push(turn)
 	});
@@ -297,7 +297,7 @@ function retrievePlayerTurns(playerTurns){
 
 //load current players turns
 function retrievePlayersTurns(playerTurns){
-	var playersTurnList = [];
+	let playersTurnList = [];
 	playerTurns.forEach(turn=>{
 		if (turn.player_id == currentPlayer.id)
 		{
@@ -317,9 +317,9 @@ function generatePlayer(){
 function generateDare()   
  {		 
  	
- 		var ranDare = Math.floor(Math.random() * (listOfDares.length));
+ 		let ranDare = Math.floor(Math.random() * (listOfDares.length));
  		currentDare = listOfDares[ranDare];	
- 		var dareText = currentDare.text
+ 		let dareText = currentDare.text
  	
 
  		//checks to see if a random player needs to be inserted
