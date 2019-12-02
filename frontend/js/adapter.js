@@ -16,16 +16,16 @@ createGame: () => {
   },
 
 //players
-  getPlayers: () => {
-    return fetch(`${URL}/games/:game_id/players`)
+  getPlayers: (game_id) => {
+    return fetch(`${URL}/games/${game_id}/players`)
     .then(res=>res.json())
   },
 
-  createPlayer: (name) => {
-    return fetch(`${URL}/games/:game_id/players`, {
+  createPlayer: (name, game_id) => {
+    return fetch(`${URL}/games/${game_id}/players`, {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(name)
+      body: JSON.stringify(name, game_id)
     })
     .then(resp => resp.json()) 
   },

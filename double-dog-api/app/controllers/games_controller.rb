@@ -5,7 +5,7 @@ class GamesController < ApplicationController
   end
 
   def show
-    game = Game.find(user_params[:id])
+    game = Game.find(game_params[:id])
     render json: game
   end
 
@@ -16,7 +16,7 @@ class GamesController < ApplicationController
 
  private
 
-  def user_params
+  def game_params
     params.permit(:id,:winscore)
   end
 end

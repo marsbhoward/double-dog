@@ -21,6 +21,7 @@ const playerShots = document.getElementById("shots-count");
 var listOfDares = [];
 var previousDares = [];
 var getScore = [];
+var gameId =0;
 
 
 var currentDare = {};
@@ -38,8 +39,9 @@ addPlayer.focus()
 
 //to be called on load
 document.addEventListener('DOMContentLoaded', function(){
+ 	adapter.createGame();
  	fetchDares();
- 	adapter.createGame()
+ 	fetchGame();
  })
 
 //click event(s) for play button
@@ -67,9 +69,10 @@ addPlayerForm.addEventListener('submit', e=> {
 	let newPlayer = {name: player}
 
 	if(player){
-		adapter.createPlayer(newPlayer).then(res=> {
+		adapter.createPlayer(newPlayer,gameId).then(res=> {
 			//enable elements
 		fetchPlayers();
+		console.log(gameId);
 		alert(player +" was added")
 		playerNameField.value = ""
 		playerNameField.placeholder="Add a Player"
@@ -83,7 +86,7 @@ addPlayerForm.addEventListener('submit', e=> {
 	}
 });
 
-
+//capitalize first letter in player names
 function capitalizeWord(string){
 	const s = string.toLowerCase()
 	return s.charAt(0).toUpperCase() + s.slice(1)
@@ -223,6 +226,12 @@ function TurnPlayer(){
 }
 
 
+//retieves game id
+function fetchGame(){
+	adapter.getGame()
+	.then(games => retrieveGame(games))
+}
+
 //collects dares from backend.
 function fetchDares() {
 	adapter.getDares()
@@ -231,7 +240,7 @@ function fetchDares() {
 
 //collects players from backend.
 function fetchPlayers() {
-	adapter.getPlayers()
+	adapter.getPlayers(gameId)
 	.then(players => retrievePlayers(players))	
 }
 
@@ -247,6 +256,17 @@ function fetchPlayersTurns(){
 		.then(playerTurns => retrievePlayersTurns(playerTurns))
 }
 
+
+function  retrieveGame(games){
+	var listOfGames = [];
+	games.forEach(game=> {		
+		listOfGames.push(game);	
+	});
+	console.log(gameId)
+	gameId = listOfGames[listOfGames.length-1].id;
+	console.log(gameId)
+
+}
 
 //all loaded Dares
 function  retrieveDares(dares){
@@ -282,9 +302,6 @@ function retrievePlayersTurns(playerTurns){
 		if (turn.player_id == currentPlayer.id)
 		{
 			playersTurnList.push(turn)
-			console.log(turn.player_id)
-			console.log(currentPlayer.id)
-			console.log('added turn to player')
 		}
 		
 	});
