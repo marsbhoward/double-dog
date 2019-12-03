@@ -6,13 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Game.create()
-
-Game.find(1).players.create(name: "Mars", :score => 0, :shots => 0)
-Game.find(1).players.create(name: "Deja", :score => 0, :shots => 0)
-Game.find(1).players.create(name: "Nala", :score => 0, :shots => 0)
-Game.find(1).players.create(name: "Wesley", :score => 0, :shots => 0)
-
 
 Dare.create(text: "Take a shot", :points => 1, :shots=> 1)
 Dare.create(text: "Take two shots", :points => 2, :shots=> 1)

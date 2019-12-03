@@ -32,16 +32,16 @@ createGame: () => {
 
 
 //player turns
-  getPlayerTurns: () => {
-    return fetch(`${URL}/player_turns`)
+  getPlayerTurns: (game_id) => {
+    return fetch(`${URL}/games/${game_id}/player_turns`)
     .then(res=>res.json())
   },
 
-  createPlayerTurn: (player_id, dare_id) => {
-    return fetch(`${URL}/player_turns`, {
+  createPlayerTurn: (player_id, dare_id, game_id) => {
+    return fetch(`${URL}/games/${game_id}/player_turns`, {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({player_id, dare_id})
+      body: JSON.stringify({player_id, dare_id,game_id})
     })
     .then(resp => resp.json()) 
   },

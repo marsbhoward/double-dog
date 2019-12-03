@@ -19,6 +19,7 @@ const playerShots = document.getElementById("shots-count");
 
 
 var listOfDares = [];
+var listOfGames = [];
 var previousDares = [];
 var getScore = [];
 var gameId =0;
@@ -39,9 +40,9 @@ addPlayer.focus()
 
 //to be called on load
 document.addEventListener('DOMContentLoaded', function(){
- 	adapter.createGame();
  	fetchDares();
- 	fetchGame();
+ 	startGame();
+ 	
  })
 
 //click event(s) for play button
@@ -85,6 +86,14 @@ addPlayerForm.addEventListener('submit', e=> {
 		alert("Please ener a name")
 	}
 });
+
+//
+function startGame(){
+	adapter.createGame().then(res=> {
+		fetchGame();
+	})
+ }
+
 
 //capitalize first letter in player names
 function capitalizeWord(string){
@@ -142,9 +151,9 @@ function showRules(){
  		</div>`;
 }
 
-function createTurn(player_id, dare_id){
-	adapter.createPlayerTurn(currentPlayer.id, currentDare.id).then(res => {
-
+function createTurn(){
+	adapter.createPlayerTurn(currentPlayer.id, currentDare.id, gameId).then(res => {
+		console.log(gameId)
 		fetchPlayerTurns()
 		fetchPlayersTurns()
 	})
@@ -246,25 +255,27 @@ function fetchPlayers() {
 
 //collects player turns from backend.
 function fetchPlayerTurns(){
-	adapter.getPlayerTurns()
+	adapter.getPlayerTurns(gameId)
 		.then(playerTurns => retrievePlayerTurns(playerTurns))
 }
 
 //collects certain player turns
 function fetchPlayersTurns(){
-	adapter.getPlayerTurns()
+	adapter.getPlayerTurns(gameId)
 		.then(playerTurns => retrievePlayersTurns(playerTurns))
 }
 
 
 function  retrieveGame(games){
-	let listOfGames = [];
 	games.forEach(game=> {		
 		listOfGames.push(game);	
 	});
-	console.log(gameId)
-	gameId = listOfGames[listOfGames.length-1].id;
-	console.log(gameId)
+
+	console.log(listOfGames)
+
+	gameId = listOfGames[(listOfGames.length-1)].id;
+	listOfGames = [];
+
 
 }
 
