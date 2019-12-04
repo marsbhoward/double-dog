@@ -73,7 +73,6 @@ addPlayerForm.addEventListener('submit', e=> {
 		adapter.createPlayer(newPlayer,gameId).then(res=> {
 			//enable elements
 		fetchPlayers();
-		console.log(gameId);
 		alert(player +" was added")
 		playerNameField.value = ""
 		playerNameField.placeholder="Add a Player"
@@ -106,14 +105,15 @@ function capitalizeWord(string){
 function showGameDares(){	
 	var pastDares = [];
 //	fetchPlayerTurns();
-	for(var i = 0; i < listOfPlayerTurns.length; i++)
+	for(let i = 0; i < listOfPlayerTurns.length; i++)
 	{	
+	
 		 pastDares += `
  		<span> 
- 			turn: ${listOfPlayers[(i)].name}<br>
- 			player: ${listOfPlayerTurns[i].name}<br>
-
- 			dare: ${listOfDares[(listOfPlayerTurns[i].dare_id-1)].text}<br>
+ 			turn: ${listOfPlayerTurns[(i)].id}<br>
+ 			player: ${listOfPlayers[(listOfPlayerTurns[i].player_id)-1].name}<br>
+				
+ 			dare: ${listOfDares[(listOfPlayerTurns[i].dare_id)-1].text}<br>
 			<br>
  		</span>
  	`
@@ -125,11 +125,11 @@ function showGameDares(){
 
 function showPlayersDares(){
 	var playerDares = [];
-	for(var i = 0; i < listOfPlayersTurns.length; i++)
+	for(let i = 0; i < listOfPlayersTurns.length; i++)
 	{	
 		 playerDares += `
  		<span> 
- 			turn: ${listOfPlayersTurns[i].id}<br>
+ 			turn: ${listOfPlayersTurns[i].id}<br><br>
  			dare: ${listOfDares[(listOfPlayersTurns[i].dare_id-1)].text}<br>
 			<br>
  		</span>
@@ -151,9 +151,9 @@ function showRules(){
  		</div>`;
 }
 
-function createTurn(){
-	adapter.createPlayerTurn(currentPlayer.id, currentDare.id, gameId).then(res => {
-		console.log(gameId)
+function createTurn(player_id, dare_id){
+	adapter.createPlayerTurn(currentPlayer.id, currentDare.id).then(res => {
+
 		fetchPlayerTurns()
 		fetchPlayersTurns()
 	})
@@ -161,7 +161,7 @@ function createTurn(){
 
 function getScoreboard(){	
 	var theScore = [];
-	for(var i = 0; i < listOfPlayers.length; i++)
+	for(let i = 0; i < listOfPlayers.length; i++)
 	{	
 		 theScore += `
  		<span> 
@@ -255,13 +255,13 @@ function fetchPlayers() {
 
 //collects player turns from backend.
 function fetchPlayerTurns(){
-	adapter.getPlayerTurns(gameId)
+	adapter.getPlayerTurns()
 		.then(playerTurns => retrievePlayerTurns(playerTurns))
 }
 
 //collects certain player turns
 function fetchPlayersTurns(){
-	adapter.getPlayerTurns(gameId)
+	adapter.getPlayerTurns()
 		.then(playerTurns => retrievePlayersTurns(playerTurns))
 }
 
@@ -271,7 +271,6 @@ function  retrieveGame(games){
 		listOfGames.push(game);	
 	});
 
-	console.log(listOfGames)
 
 	gameId = listOfGames[(listOfGames.length-1)].id;
 	listOfGames = [];

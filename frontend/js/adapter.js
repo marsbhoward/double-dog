@@ -7,18 +7,20 @@ createGame: () => {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
     })
-    .then(resp => resp.json()) 
+    .then(res => res.json()) 
   },
 
   getGame: () => {
     return fetch(`${URL}/games`)
-    .then(res=>res.json())
+    .then(resp => resp.json())
   },
 
 //players
   getPlayers: (game_id) => {
-    return fetch(`${URL}/games/${game_id}/players`)
-    .then(res=>res.json())
+    return fetch(`${URL}/games/${game_id}/players`,{
+      headers: { "Content-Type": "application/json" },
+    })
+    .then(resp => resp.json())
   },
 
   createPlayer: (name, game_id) => {
@@ -32,16 +34,16 @@ createGame: () => {
 
 
 //player turns
-  getPlayerTurns: (game_id) => {
-    return fetch(`${URL}/games/${game_id}/player_turns`)
+  getPlayerTurns: () => {
+    return fetch(`${URL}/player_turns`)
     .then(res=>res.json())
   },
 
-  createPlayerTurn: (player_id, dare_id, game_id) => {
-    return fetch(`${URL}/games/${game_id}/player_turns`, {
+  createPlayerTurn: (player_id, dare_id) => {
+    return fetch(`${URL}/player_turns`, {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({player_id, dare_id,game_id})
+      body: JSON.stringify({player_id, dare_id})
     })
     .then(resp => resp.json()) 
   },

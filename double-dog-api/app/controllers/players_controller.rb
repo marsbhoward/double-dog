@@ -1,6 +1,6 @@
 class PlayersController < ApplicationController
   def index()
-  	players = Game.find(game_params[:game_id]).players
+  	players = Game.find(game_params[:game_id]).players.all
   	render json: players
   end
 
