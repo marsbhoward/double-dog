@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_26_032305) do
+ActiveRecord::Schema.define(version: 2019_12_04_152030) do
 
   create_table "dares", force: :cascade do |t|
     t.string "text"
@@ -18,6 +18,15 @@ ActiveRecord::Schema.define(version: 2019_11_26_032305) do
     t.integer "shots"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "game_turns", force: :cascade do |t|
+    t.integer "game_id", null: false
+    t.integer "player_turn_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_game_turns_on_game_id"
+    t.index ["player_turn_id"], name: "index_game_turns_on_player_turn_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -45,6 +54,8 @@ ActiveRecord::Schema.define(version: 2019_11_26_032305) do
     t.index ["game_id"], name: "index_players_on_game_id"
   end
 
+  add_foreign_key "game_turns", "games"
+  add_foreign_key "game_turns", "player_turns"
   add_foreign_key "player_turns", "dares"
   add_foreign_key "player_turns", "players"
   add_foreign_key "players", "games"

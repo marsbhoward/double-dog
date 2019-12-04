@@ -48,6 +48,21 @@ createGame: () => {
     .then(resp => resp.json()) 
   },
 
+  //game turns
+    getGameTurns: (game_id) => {
+    return fetch(`${URL}/games/${game_id}/game_turns`)
+    .then(res=>res.json())
+  },
+
+    createGameTurn: (game_id, player_turn_id) => {
+    return fetch(`${URL}/games/${game_id}/game_turns`, {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({game_id, player_turn_id})
+    })
+    .then(resp => resp.json()) 
+  },
+
 //dares
   getDares: () => {
   	return fetch(`${URL}/dares`)
