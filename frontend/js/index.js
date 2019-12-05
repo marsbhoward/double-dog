@@ -47,20 +47,14 @@ document.addEventListener('DOMContentLoaded', function(){
  })
 
 //click event(s) for play button
-playButton.addEventListener("click", doneDare,false);
-playButton.addEventListener("click", getScoreboard,false);
-playButton.addEventListener("click", function(){generateDare(listOfDares)},false);
-playButton.addEventListener("click", function(){createTurn()},false);
+gameTurns(playButton,doneDare);
 
 //click event(s) for shot button
-shotButton.addEventListener("click", shotDare,false);
-shotButton.addEventListener("click", function(){generateDare(listOfDares)},false);
-shotButton.addEventListener("click", function(){createTurn()},false);
-
+gameTurns(shotButton,shotDare);
 
 
 //click event(s) for pass button
-passButton.addEventListener("click", passDare,false);
+gameTurns(passButton,passDare);
 
 //click event for add player button 
 addPlayerForm.addEventListener('submit', e=> {
@@ -102,6 +96,14 @@ function capitalizeWord(string){
 	return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
+
+//fuctions to create and retrieve turns
+function gameTurns(button,buttonFunction){
+	button.addEventListener("click", buttonFunction,false);
+	button.addEventListener("click", getScoreboard,false);
+	button.addEventListener("click", function(){generateDare(listOfDares)},false);
+	button.addEventListener("click", function(){createTurn()},false);
+}
 
 //reveal past dares in info space
 function showGameDares(){	
