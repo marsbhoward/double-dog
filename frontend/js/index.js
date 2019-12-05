@@ -30,6 +30,7 @@ var currentId = -1;
 var listOfPlayers = {};
 var listOfPlayerTurns = {};
 var listOfPlayersTurns = {};
+var listOfGameTurns = {};
 var randomPlayer = {};
 var selectedPlayer = {};
 
@@ -49,12 +50,13 @@ document.addEventListener('DOMContentLoaded', function(){
 playButton.addEventListener("click", doneDare,false);
 playButton.addEventListener("click", getScoreboard,false);
 playButton.addEventListener("click", function(){generateDare(listOfDares)},false);
-playButton.addEventListener("click", function(){createTurn(currentPlayer.id,currentDare.id)},false);
+playButton.addEventListener("click", function(){createTurn()},false);
 
 //click event(s) for shot button
 shotButton.addEventListener("click", shotDare,false);
 shotButton.addEventListener("click", function(){generateDare(listOfDares)},false);
-shotButton.addEventListener("click", function(){createTurn(currentPlayer.id,currentDare.id)},false);
+shotButton.addEventListener("click", function(){createTurn()},false);
+
 
 
 //click event(s) for pass button
@@ -86,7 +88,7 @@ addPlayerForm.addEventListener('submit', e=> {
 	}
 });
 
-//
+//creates a game, triggered on page load
 function startGame(){
 	adapter.createGame().then(res=> {
 		fetchGame();
@@ -104,16 +106,19 @@ function capitalizeWord(string){
 //reveal past dares in info space
 function showGameDares(){	
 	var pastDares = [];
-//	fetchPlayerTurns();
-	for(let i = 0; i < listOfPlayerTurns.length; i++)
+	let currentName = ""
+	let currentText = ""
+	for(let i = 0; i < listOfGameTurns.length; i++)
 	{	
-	
+		currentName = listOfPlayers.find(x => x.id == listOfPlayerTurns.find(t => t.id ==[listOfGameTurns[i].player_turn_id]).player_id).name
+		currentText = listOfDares.find(x => x.id == listOfPlayerTurns.find(t => t.id ==[listOfGameTurns[i].player_turn_id]).dare_id).text
+
 		 pastDares += `
  		<span> 
- 			turn: ${listOfPlayerTurns[(i)].id}<br>
- 			player: ${listOfPlayers[(listOfPlayerTurns[i].player_id)-1].name}<br>
+ 			turn: ${(i+1)}<br>
+ 			player: ${currentName}<br>
 				
- 			dare: ${listOfDares[(listOfPlayerTurns[i].dare_id)-1].text}<br>
+ 			dare: ${currentText}<br>
 			<br>
  		</span>
  	`
@@ -151,13 +156,20 @@ function showRules(){
  		</div>`;
 }
 
-function createTurn(player_id, dare_id){
+function createTurn(){
 	adapter.createPlayerTurn(currentPlayer.id, currentDare.id).then(res => {
-
-		fetchPlayerTurns()
-		fetchPlayersTurns()
+		fetchPlayerTurns();
+		fetchPlayersTurns();
 	})
 }
+
+function createGameTurn(){
+	adapter.createGameTurn(gameId,listOfPlayerTurns[listOfPlayerTurns.length-1].id).then (res => {
+	fetchGameTurns();
+	})
+}
+
+
 
 function getScoreboard(){	
 	var theScore = [];
@@ -214,9 +226,10 @@ function passDare(){
 	 	currentPlayer.score -= currentDare.points
 	 	playerScore.innerHTML = currentPlayer.score
 	 	TurnPlayer();
-	 	getScoreboard()
+	 	getScoreboard();
 	 	generateDare(listOfDares);
-	 	createTurn(currentPlayer.id,currentDare.id);
+	 	createTurn();
+	 	createGameTurn();
 	}
 }
 
@@ -265,6 +278,11 @@ function fetchPlayersTurns(){
 		.then(playerTurns => retrievePlayersTurns(playerTurns))
 }
 
+//collects game turns from backend.
+function fetchGameTurns(){
+	adapter.getGameTurns(gameId)
+		.then(gameTurns => retrieveGameTurns(gameTurns))
+}
 
 function  retrieveGame(games){
 	games.forEach(game=> {		
@@ -303,6 +321,16 @@ function retrievePlayerTurns(playerTurns){
 		playerTurnList.push(turn)
 	});
 	listOfPlayerTurns = playerTurnList;
+	createGameTurn();
+}
+
+//load game turns 
+function retrieveGameTurns(gameTurns){
+	let gameTurnsList = [];
+	gameTurns.forEach(gameTurn=>{
+		gameTurnsList.push(gameTurn)
+	});
+	listOfGameTurns = gameTurnsList;
 }
 
 //load current players turns

@@ -5,7 +5,6 @@ class PlayerTurnsController < ApplicationController
   end
 
   def create
-    #create based off of matchmaking user games
     player_turn = PlayerTurn.create(player_id: player_turn_params[:player_id], dare_id: player_turn_params[:dare_id])
     render json: player_turn
   end
