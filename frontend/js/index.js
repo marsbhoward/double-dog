@@ -17,6 +17,7 @@ const showDare = document.getElementById("dares");
 const playerScore = document.getElementById("game-score");
 const playerShots = document.getElementById("shots-count");
 
+var winScore = 10;
 
 var listOfDares = [];
 var listOfGames = [];
@@ -52,7 +53,8 @@ gameTurns(playButton,doneDare);
 
 //funcion to see if game is finished
 function gameWon(){
-	if (currentPlayer.score >= 10){
+	winScore = listOfGames.find(g => g.id ==gameId).winScore;
+	if (currentPlayer.score >= winScore){
 		alert("Game OVER\n" + currentPlayer.name +" has won the game!!")
 		playButton.disabled = true
 		shotButton.disabled = true
@@ -299,13 +301,14 @@ function fetchGameTurns(){
 }
 
 function  retrieveGame(games){
+	listOfGames = [];
 	games.forEach(game=> {		
 		listOfGames.push(game);	
 	});
 
 
 	gameId = listOfGames[(listOfGames.length-1)].id;
-	listOfGames = [];
+	
 
 
 }
