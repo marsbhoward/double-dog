@@ -49,6 +49,17 @@ document.addEventListener('DOMContentLoaded', function(){
 //click event(s) for play button
 gameTurns(playButton,doneDare);
 
+
+//funcion to see if game is finished
+function gameWon(){
+	if (currentPlayer.score >= 10){
+		alert("Game OVER\n" + currentPlayer.name +" has won the game!!")
+		playButton.disabled = true
+		shotButton.disabled = true
+		passButton.disabled = true
+	}
+}
+
 //click event(s) for shot button
 gameTurns(shotButton,shotDare);
 
@@ -196,6 +207,7 @@ function getScoreboard(){
 function doneDare(){
 	if (previousDares.length >= 1){
 		currentPlayer.score += currentDare.points
+		gameWon()
 		playerScore.innerHTML = currentPlayer.score	
 	}
 	else{
