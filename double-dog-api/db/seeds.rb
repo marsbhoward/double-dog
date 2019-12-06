@@ -22,7 +22,7 @@ Dare.create(text: "Hop on one foot to the front door and back if you lose your b
 Dare.create(text: "Do a handstand if the group is not satisfied take a shot", :points => 1, :shots=>1)
 Dare.create(text: "Give [RandomPlayer] a rough piggy back ride around the room", :points => 1, :shots=>1)
 Dare.create(text: "You have to do [RandomPlayer]'s next dare with them", :points => 1, :shots=>1)
-Dare.create(text: "Take a shot with [RandomPlayer]", :points => 1, :shots=>1)
+Dare.create(text: "Take a shot with [RandomPlayer]", :points => 1, :shots=>0)
 Dare.create(text: "Choose someone to take a shot", :points => 1, :shots=>1)
 Dare.create(text: "Free turn", :points => 0, :shots=>0)
 Dare.create(text: "Take two shots", :points => 1, :shots=>2)

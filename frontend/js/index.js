@@ -238,6 +238,15 @@ function passDare(){
 	else if ((currentPlayer.score - currentDare.points)<0) {
 		alert("you dont have enough points to pass this dare! \nYou will have to do the dare or take the penalty shot(s).")
 	}
+	else if (currentDare.points < 0) {
+		currentPlayer.score += currentDare.points
+		playerScore.innerHTML = currentPlayer.score
+	 	TurnPlayer();
+	 	getScoreboard();
+	 	generateDare(listOfDares);
+	 	createTurn();
+	 	createGameTurn();
+	}
 	else{
 	 	currentPlayer.score -= currentDare.points
 	 	playerScore.innerHTML = currentPlayer.score
