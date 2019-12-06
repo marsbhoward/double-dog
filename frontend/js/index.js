@@ -68,7 +68,6 @@ gameTurns(shotButton,shotDare);
 
 //click event(s) for pass button
 gameTurns(passButton,passDare);
-
 //click event for add player button 
 addPlayerForm.addEventListener('submit', e=> {
 	e.preventDefault()
@@ -241,20 +240,16 @@ function passDare(){
 	else if (currentDare.points < 0) {
 		currentPlayer.score += currentDare.points
 		playerScore.innerHTML = currentPlayer.score
-	 	TurnPlayer();
+	 
 	 	getScoreboard();
-	 	generateDare(listOfDares);
-	 	createTurn();
-	 	createGameTurn();
+	 	TurnPlayer();
 	}
 	else{
 	 	currentPlayer.score -= currentDare.points
 	 	playerScore.innerHTML = currentPlayer.score
-	 	TurnPlayer();
+	 	
 	 	getScoreboard();
-	 	generateDare(listOfDares);
-	 	createTurn();
-	 	createGameTurn();
+	 	TurnPlayer();
 	}
 }
 
