@@ -29,6 +29,7 @@ var gameId =0;
 var currentDare = {};
 var currentId = -1;
 var listOfPlayers = {};
+var currentPlayers = {};
 var listOfPlayerTurns = {};
 var listOfPlayersTurns = {};
 var listOfGameTurns = {};
@@ -40,6 +41,26 @@ var currentPlayer = listOfPlayers[currentId];
 addPlayer.focus()
 
 
+//class construstion
+class Player{
+	constructor(id, name, score, shots){
+		this.id = id;
+        this.name = name;
+        this.score = score;
+        this.shots = shots;
+	}
+
+	//additional class methods
+	addScore() {
+		this.score += currentDare.points
+	}
+	subtractScore(){
+		this.score -= currentDare.points
+	}
+	addShot(){
+		this.shots += currentDare.shots
+	}
+}
 //to be called on load
 document.addEventListener('DOMContentLoaded', function(){
  	fetchDares();
@@ -286,6 +307,12 @@ function fetchPlayers() {
 	.then(players => retrievePlayers(players))	
 }
 
+function assignPlayers(){
+	for(let i = 0; i < listOfPlayers.length; i++){
+		 currentPlayers[i] = new Player(listOfPlayers[i].id,listOfPlayers[i].name,listOfPlayers[i].score,listOfPlayers[i].shots)
+	}
+}
+
 //collects player turns from backend.
 function fetchPlayerTurns(){
 	adapter.getPlayerTurns()
@@ -333,6 +360,7 @@ function  retrievePlayers(players){
 		playerList.push(player);	
 	});
 	listOfPlayers = playerList;
+	assignPlayers();
 }
 
 //load player turns
