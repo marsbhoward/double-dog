@@ -36,7 +36,7 @@ var listOfGameTurns = {};
 var randomPlayer = {};
 var selectedPlayer = {};
 
-var currentPlayer = listOfPlayers[currentId];
+var currentPlayer = currentPlayers[currentId];
 
 addPlayer.focus()
 
@@ -145,7 +145,8 @@ function showGameDares(){
 	let currentText = ""
 	for(let i = 0; i < listOfGameTurns.length; i++)
 	{	
-		currentName = listOfPlayers.find(x => x.id == listOfPlayerTurns.find(t => t.id ==[listOfGameTurns[i].player_turn_id]).player_id).name
+		
+		currentName = Object.values(currentPlayers).find(x => x.id == listOfPlayerTurns[listOfGameTurns[i].player_turn_id-1].player_id).name
 		currentText = listOfDares.find(x => x.id == listOfPlayerTurns.find(t => t.id ==[listOfGameTurns[i].player_turn_id]).dare_id).text
 
 		 pastDares += `
@@ -208,13 +209,13 @@ function createGameTurn(){
 
 function getScoreboard(){	
 	var theScore = [];
-	for(let i = 0; i < listOfPlayers.length; i++)
+	for(let i = 0; i < Object.keys(currentPlayers).length; i++)
 	{	
 		 theScore += `
  		<span> 
- 			${listOfPlayers[i].name}<br>
- 			score: ${listOfPlayers[i].score}<br>
-			shots: ${listOfPlayers[i].shots}<br>
+ 			${currentPlayers[i].name}<br>
+ 			score: ${currentPlayers[i].score}<br>
+			shots: ${currentPlayers[i].shots}<br>
 			<br>
  		</span>
 
@@ -228,7 +229,7 @@ function getScoreboard(){
 
 function doneDare(){
 	if (previousDares.length >= 1){
-		currentPlayer.score += currentDare.points
+		currentPlayer.addScore();
 		gameWon()
 		playerScore.innerHTML = currentPlayer.score	
 	}
@@ -246,7 +247,7 @@ function doneDare(){
 }
 
 function shotDare(){
-	currentPlayer.shots += currentDare.shots
+	currentPlayer.addShot()
 	getScoreboard()
 	TurnPlayer();
 }
@@ -259,15 +260,15 @@ function passDare(){
 		alert("you dont have enough points to pass this dare! \nYou will have to do the dare or take the penalty shot(s).")
 	}
 	else if (currentDare.points < 0) {
-		currentPlayer.score += currentDare.points
-		playerScore.innerHTML = currentPlayer.score
+		currentPlayer.addScore();
+		playerScore.innerHTML = currentPlayer.score;
 	 
 	 	getScoreboard();
 	 	TurnPlayer();
 	}
 	else{
-	 	currentPlayer.score -= currentDare.points
-	 	playerScore.innerHTML = currentPlayer.score
+	 	currentPlayer.subtractScore()
+	 	playerScore.innerHTML = currentPlayer.score;
 	 	
 	 	getScoreboard();
 	 	TurnPlayer();
@@ -276,12 +277,12 @@ function passDare(){
 
 //cycles through the list of players
 function TurnPlayer(){
-	if (currentId >= listOfPlayers.length-1) {
+	if (currentId >= Object.keys(currentPlayers).length-1) {
 		currentId = -1;
 		console.log('reset');
 	}
 	currentId ++
-	currentPlayer = listOfPlayers[currentId];
+	currentPlayer = currentPlayers[currentId];
 
 	turnPlayer.innerHTML = "Turn Player: "+ currentPlayer.name;
 	playerScore.innerHTML = currentPlayer.score;
@@ -397,7 +398,7 @@ function retrievePlayersTurns(playerTurns){
 
 //randomly selects a Player.
 function generatePlayer(){
-	return Math.floor(Math.random() * (listOfPlayers.length));
+	return Math.floor(Math.random() * (Object.keys(currentPlayers).length));
 }
 
 //randomly selects a dare.
@@ -412,12 +413,12 @@ function generateDare()
  		//checks to see if a random player needs to be inserted
  		if (dareText.includes("[RandomPlayer]")){
  			randomPlayer=  generatePlayer();
- 			selectedPlayer = listOfPlayers[randomPlayer];
+ 			selectedPlayer = currentPlayers[randomPlayer];
  			//stops current player from being the random player
  			if (selectedPlayer.id == currentPlayer.id){
  				while (selectedPlayer.id == currentPlayer.id){
  					randomPlayer=  generatePlayer();
- 					selectedPlayer = listOfPlayers[randomPlayer];
+ 					selectedPlayer = currentPlayers[randomPlayer];
  				}
  			}
 
