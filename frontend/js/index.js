@@ -28,7 +28,7 @@ var gameId =0;
 
 var currentDare = {};
 var currentId = -1;
-var listOfPlayers = {};
+
 var currentPlayers = {};
 var listOfPlayerTurns = {};
 var listOfPlayersTurns = {};
@@ -145,7 +145,7 @@ function showGameDares(){
 	let currentText = ""
 	for(let i = 0; i < listOfGameTurns.length; i++)
 	{	
-		
+
 		currentName = Object.values(currentPlayers).find(x => x.id == listOfPlayerTurns[listOfGameTurns[i].player_turn_id-1].player_id).name
 		currentText = listOfDares.find(x => x.id == listOfPlayerTurns.find(t => t.id ==[listOfGameTurns[i].player_turn_id]).dare_id).text
 
@@ -308,11 +308,6 @@ function fetchPlayers() {
 	.then(players => retrievePlayers(players))	
 }
 
-function assignPlayers(){
-	for(let i = 0; i < listOfPlayers.length; i++){
-		 currentPlayers[i] = new Player(listOfPlayers[i].id,listOfPlayers[i].name,listOfPlayers[i].score,listOfPlayers[i].shots)
-	}
-}
 
 //collects player turns from backend.
 function fetchPlayerTurns(){
@@ -356,12 +351,11 @@ function  retrieveDares(dares){
 
 //all loaded players
 function  retrievePlayers(players){
-	let playerList = [];
+	let i = 0
 	players.forEach(player=> {		
-		playerList.push(player);	
+		currentPlayers[i] = new Player(player.id, player.name, player.score, player.shots)
+		i++	
 	});
-	listOfPlayers = playerList;
-	assignPlayers();
 }
 
 //load player turns
