@@ -88,7 +88,8 @@ gameTurns(shotButton,shotDare);
 
 
 //click event(s) for pass button
-gameTurns(passButton,passDare);
+	passButton.addEventListener("click", passDare,false);
+	passButton.addEventListener("click", getScoreboard,false);
 //click event for add player button 
 addPlayerForm.addEventListener('submit', e=> {
 	e.preventDefault()
@@ -186,7 +187,7 @@ function showRules(){
 	infoSpace.innerHTML= `<br><br><div class="ui raised segment" id="past_dares">
  		<a class="ui red ribbon label">Rules</a>
  		<br><br>Welcome to Double Dog Dare <br><br> the rules the simple the turns go in order from the first person added to the last. 
- 		When it is your turn you have the choice of: <br><br>  1. Doing the dare and gaining the points. <br><br> 2. Taking the penalty shot(s)
+ 		When it is your turn you have the choice of: <br><br>  1. Doing the dare and gaining the points (if your dare involves another perosn they must also agree). <br><br> 2. Taking the penalty shot(s)
  		allowing you to pass the dare without losing any points. <br><br> 3. Passing the dare avoiding the penalty shot(s) but also losing the losing the 
  		same amount of points you would have gained(only if you have enough points to do so).  
  		</div>`;
@@ -265,6 +266,8 @@ function passDare(){
 	 
 	 	getScoreboard();
 	 	TurnPlayer();
+	 	generateDare(listOfDares)
+		createTurn()
 	}
 	else{
 	 	currentPlayer.subtractScore()
@@ -272,6 +275,8 @@ function passDare(){
 	 	
 	 	getScoreboard();
 	 	TurnPlayer();
+	 	generateDare(listOfDares)
+		createTurn()
 	}
 }
 
