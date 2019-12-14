@@ -52,6 +52,10 @@
   max-width: 50em;
 }
 
+#dares{
+  text-align: center;
+}
+
 
 #left-container {
   float: left;
