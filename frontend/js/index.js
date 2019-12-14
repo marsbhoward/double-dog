@@ -65,7 +65,7 @@ class Player{
 document.addEventListener('DOMContentLoaded', function(){
  	fetchDares();
  	startGame();
- 	
+
  })
 
 //click event(s) for play button
@@ -76,7 +76,7 @@ gameTurns(playButton,doneDare);
 function gameWon(){
 	winScore = listOfGames.find(g => g.id ==gameId).winScore;
 	if (currentPlayer.score >= winScore){
-		alert("Game OVER\n" + currentPlayer.name +" has won the game!!")
+		alert("Game OVER\n" + currentPlayer.name +" has won the game!!\n refresh the page to start a new game")
 		playButton.disabled = true
 		shotButton.disabled = true
 		passButton.disabled = true
@@ -118,6 +118,7 @@ addPlayerForm.addEventListener('submit', e=> {
 
 //creates a game, triggered on page load
 function startGame(){
+	alert("participation on this WebSite is restricted to those individuals who are over 21 years of age, depending on the state you live in , and are fully able and competent to enter into the terms, conditions, obligations, affirmations, representations and warranties herein. By registering or participating in services or functions on this Site, you hereby represent that you are over 21 years of age and have the authority to enter into the terms herein. In any case, you affirm that you are over the age of 21 in all states as the Site is not intended for persons under 21. If you are under 21 years of age, [please exit and do not use the Site] ")
 	adapter.createGame().then(res=> {
 		fetchGame();
 	})
