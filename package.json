@@ -2,9 +2,9 @@
   "name": "double-dog-dare",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "frontend/index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node frontend/index.js"
   },
   "keywords": [],
   "author": "Mars",
