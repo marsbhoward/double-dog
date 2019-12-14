@@ -437,4 +437,4 @@ window.addEventListener('DOMContentLoaded', e => {
 	function dareArchive(currentDare) {
 		previousDares.push(currentDare);
 	}
-};
+});
