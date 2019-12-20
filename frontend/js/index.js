@@ -172,7 +172,7 @@ function showPlayersDares(){
 	{	
 		 playerDares += `
  		<span> 
- 			turn: ${listOfPlayersTurns[i].id}<br><br>
+ 			turn: ${(i+1)}<br><br>
  			dare: ${listOfDares[(listOfPlayersTurns[i].dare_id-1)].text}<br>
 			<br>
  		</span>
