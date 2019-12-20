@@ -235,6 +235,9 @@ function doneDare(){
 		gameWon()
 		playerScore.innerHTML = currentPlayer.score	
 	}
+	else if ((currentPlayer.score + currentDare.points)<0) {
+		alert("you dont have enough points! you will have to take the shot(s)!! \nYou will have to do the dare or take the penalty shot(s).")
+	}
 	else{
 		shotButton.disabled=false
 		passButton.disabled=false
