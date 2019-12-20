@@ -230,13 +230,19 @@ function getScoreboard(){
 
 
 function doneDare(){
-	if (previousDares.length >= 1){
-		currentPlayer.addScore();
-		gameWon()
+	 if (previousDares.length >= 1){
+		if ((currentPlayer.score + currentDare.points)<0) {
+			alert("you dont have enough points!\n You will be given a new dare!!")
+		}
+		else if (currentPlayer.score + currentDare.points > 10) {
+			currentPlayer.addScore();
+		 	gameWon()	
+		}
+		else {
+			currentPlayer.addScore();
+			TurnPlayer();
+		}
 		playerScore.innerHTML = currentPlayer.score	
-	}
-	else if ((currentPlayer.score + currentDare.points)<0) {
-		alert("you dont have enough points! you will have to take the shot(s)!! \nYou will have to do the dare or take the penalty shot(s).")
 	}
 	else{
 		shotButton.disabled=false
@@ -247,8 +253,9 @@ function doneDare(){
 		allDaresButton.addEventListener("click", showGameDares,false);
 		ruleButton.addEventListener("click", showRules,false);
 		scoreboard.addEventListener("click", getScoreboard,false);
+		TurnPlayer();
 	}
-	TurnPlayer();
+		
 }
 
 function shotDare(){
@@ -288,7 +295,7 @@ function passDare(){
 function TurnPlayer(){
 	if (currentId >= Object.keys(currentPlayers).length-1) {
 		currentId = -1;
-		console.log('reset');
+
 	}
 	currentId ++
 	currentPlayer = currentPlayers[currentId];
