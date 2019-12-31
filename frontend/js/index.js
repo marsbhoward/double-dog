@@ -11,6 +11,7 @@ const playerDareButton = document.getElementById("player-dares");
 const allDaresButton = document.getElementById("game-dares");
 const ruleButton = document.getElementById("rules");
 const showScoreboard = document.getElementById("scoreboard");
+const sortButton = document.getElementById("sort");
 
 const turnPlayer = document.getElementById("turn-player");
 const showDare = document.getElementById("dares");
@@ -67,6 +68,40 @@ document.addEventListener('DOMContentLoaded', function(){
  	startGame();
 
  })
+
+
+function sortFunction(){
+	var sortlist = []
+	var sList = []
+    return fetch(`http://localhost:3000/games/${gameId}/players`,{
+      headers: { "Content-Type": "application/json" },
+    })
+    .then(resp => resp.json())
+    .then(players => {
+    	
+		for(let i = 0; i < players.length; i++){
+			sortlist.push (players[i].name)
+		}
+
+		sortlist = sortlist.sort()
+
+		for (let i = 0; i < sortlist.length; i++){
+
+			sList += `<span> ${sortlist[i]} <br> </span>`
+		}
+	
+	infoSpace.innerHTML= `<br><br><div class="ui raised segment" id="sortednames">
+ 	<a class="ui red ribbon label">sorted names</a>
+ 	<br><br>`+ sList +`</div>`;
+	})
+	};
+
+function fetchGame(){
+	adapter.getGame()
+	.then(games => retrieveGame(games))
+}
+
+
 
 //click event(s) for play button
 gameTurns(playButton,doneDare);
@@ -176,7 +211,6 @@ function showPlayersDares(){
  			dare: ${listOfDares[(listOfPlayersTurns[i].dare_id-1)].text}<br>
 			<br>
  		</span>
-
  	`
 	}
 	infoSpace.innerHTML= `<br><br><div class="ui raised segment" id="scores">
@@ -220,7 +254,6 @@ function getScoreboard(){
 			shots: ${currentPlayers[i].shots}<br>
 			<br>
  		</span>
-
  	`
 	}
 	infoSpace.innerHTML= `<br><br><div class="ui raised segment" id="scores">
@@ -253,6 +286,7 @@ function doneDare(){
 		allDaresButton.addEventListener("click", showGameDares,false);
 		ruleButton.addEventListener("click", showRules,false);
 		scoreboard.addEventListener("click", getScoreboard,false);
+		sortButton.addEventListener("click", sortFunction, false);
 		TurnPlayer();
 	}
 		

@@ -68,3 +68,4 @@ Dare.create(text: "Sniff the armpit of everyone in the room and rank them best t
 Dare.create(text: "Stick your bare foot in the toilet", :points =>2, :shots=> 2)
 Dare.create(text: "Lick a bar of soap", :points =>1, :shots=> 2)
 Dare.create(text: "Be blindfolded for the rest of the game", :points =>2, :shots=>1 )
+
